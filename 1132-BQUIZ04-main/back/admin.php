@@ -3,8 +3,7 @@
 </div>
 <!-- table.all>(tr.tt.ct>td*3)+(tr.pp.ct>td*3) -->
 
-<?php //serialize([1, 2, 3, 4, 5]) ;
-?>
+<?php //echo serialize([1,2,3,4,5]); ?>
 <table class="all">
     <tr class="tt ct">
         <td>帳號</td>
@@ -12,28 +11,26 @@
         <td>管理</td>
     </tr>
     <?php
-    $rows = $Admin->all();
-    foreach ($rows as $row):
+    $rows=$Admin->all();
+    foreach($rows as $row):
     ?>
     <tr class="pp ct">
-        <td><?= $row['acc']; ?></td>
-        <td><?= str_repeat("*", strlen($row['pw'])); ?></td>
+        <td><?=$row['acc'];?></td>
+        <td><?=str_repeat("*",strlen($row['pw']));?></td>
         <td>
             <?php
-                if ($row['acc'] == 'admin'):
-                    echo "此帳號為最高權限";
-                else:
-                ?>
-            <button>刪除</button>
+            if($row['acc']=='admin'):
+                echo "此帳號為最高權限";
+            else:
+            ?>
             <button onclick="location.href='?do=edit_admin&id=<?=$row['id'];?>'">修改</button>
+            <button>刪除</button>
             <?php
-                endif;
-
-
-
-
-                ?>
+            endif;
+            ?>
         </td>
     </tr>
-    <?php endforeach; ?>
+    <?php
+    endforeach;
+    ?>
 </table>

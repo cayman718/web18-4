@@ -1,4 +1,4 @@
-<?php include_once "api/db.php"; ?>
+<?php include_once "api/db.php";?>
 <!DOCTYPE html
     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <!-- saved from url=(0039) -->
@@ -9,7 +9,7 @@
 
     <title>┌精品電子商務網站」</title>
     <link href="./css/css.css" rel="stylesheet" type="text/css">
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="./js/jquery-3.4.1.min.js"></script>
     <script src="./js/js.js"></script>
 </head>
 
@@ -25,32 +25,32 @@
                 <a href="?do=news">最新消息</a> |
                 <a href="?do=look">購物流程</a> |
                 <a href="?do=buycart">購物車</a> |
-                <?php
-                if (empty($_SESSION['Mem'])) {
+                <?php 
+                if(empty($_SESSION['Mem'])){
                 ?>
                 <a href="?do=login">會員登入</a> |
                 <?php
-                } else {
-                ?>
+                }else{
+                    ?>
                 <a href="./api/logout.php?table=Mem">登出</a> |
-                <?php
-                }
+                <?php 
+                    }
                 ?>
-                <?php
-                if (empty($_SESSION['Admin'])) {
+                <?php 
+                if(empty($_SESSION['Admin'])){
                 ?>
                 <a href="?do=admin">管理登入</a> |
                 <?php
-                } else {
-                ?>
+                }else{
+                    ?>
                 <a href="back.php">返回管理</a> |
-                <?php
-                }
+                <?php 
+                    }
                 ?>
 
             </div>
 
-
+           
         </div>
 
         <div id="left" class="ct">
@@ -65,16 +65,20 @@
             </span>
         </div>
         <div id="right">
-            <?php
-            $do = $_GET['do'] ?? 'main';
-            $file = "front/" . $do . ".php";
-            include (file_exists($file)) ? $file : "./front/main.php";
+        <?php 
+        $do=$_GET['do']??'main';
+        $file="front/".$do.".php";
+        if(file_exists($file)){
+            include $file;
+        }else{
+            include "front/main.php";
+        }
 
 
-            ?>
+        ?>
         </div>
         <div id="bottom" style="line-height:70px;background:url(icon/bot.png); color:#FFF;" class="ct">
-            <?=$bottom->find(1)['bottom'];?> </div>
+        <?=$Bot->find(1)['bottom'];?></div>
     </div>
 
 </body>

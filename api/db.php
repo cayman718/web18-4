@@ -73,20 +73,20 @@ class DB
 
         return $this->exec($sql);
     }
-    function count(...$array)
+    function count(...$arg)
     {
         $sql = "select count(*) from $this->table ";
-        if (!empty($array[0]) && is_array($array[0])) {
-            $tmp = $this->arrayToSQL($array[0]);
+        if (!empty($arg[0]) && is_array($arg[0])) {
+            $tmp = $this->arrayToSQL($arg[0]);
             $sql .= " where " . join(" && ", $tmp);
-        } else if (is_string($array[0])) {
-            $sql .= $array[0];
+        } else if (is_string($arg[0])) {
+            $sql .= $arg[0];
         }
 
-        if (!empty($array[1])) {
-            $sql .= $array[1];
+        if (!empty($arg[1])) {
+            $sql .= $arg[1];
         }
-
+        // echo $sql;
         return $this->pdo->query($sql)->fetchColumn();
     }
 
@@ -106,7 +106,7 @@ class DB
     }
     function fetch_all($sql)
     {
-        return $this->pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+        return $this->pdo->query($sql)->fetchALL(PDO::FETCH_ASSOC);
     }
 }
 
@@ -128,5 +128,8 @@ function dd($array)
     echo "</pre>";
 }
 
-$Mem = new DB('members');
-$Admin = new DB('admin');
+
+$Mem = new DB("members");
+$Admin = new DB("admins");
+$Bot = new DB('bottom');
+$Type = new DB("types");
