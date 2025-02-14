@@ -14,34 +14,31 @@
 
 <table class="all">
     <?php
-    $bigs=$Type->all(['big_id'=>0]);
-    foreach($bigs as $big):
+    $bigs = $Type->all(['big_id' => 0]);
+    foreach ($bigs as $big):
     ?>
     <tr>
-        <td class="tt"><?=$big['name'];?></td>
+        <td class="tt"><?= $big['name']; ?></td>
         <td class="tt ct">
-            <button data-id="<?=$big['id'];?>">修改</button>
-            <button>刪除</button>
+            <button onclick="editType(<?= $big['id']; ?>,this)">修改</button>
+            <button onclick="del('Type',<?= $big['id']; ?>)">刪除</button>
         </td>
     </tr>
     <?php
-    if($Type->count(['big_id'=>$big['id']])>0):
-        $mids=$Type->all(['big_id'=>$big['id']]);
-        foreach($mids as $mid):
-    ?>
+        if ($Type->count(['big_id' => $big['id']]) > 0):
+            $mids = $Type->all(['big_id' => $big['id']]);
+            foreach ($mids as $mid):
+        ?>
     <tr class='ct'>
-        <td class="pp"><?=$mid['name'];?></td>
+        <td class="pp"><?= $mid['name']; ?></td>
         <td class="pp">
-            <button data-id="<?=$mid['id'];?>">修改</button>
-            <button>刪除</button>
+            <button onclick="editType(<?= $mid['id']; ?>,this)">修改</button>
+            <button onclick="del('Type',<?= $mid['id']; ?>)">刪除</button>
         </td>
     </tr>
     <?php
-        endforeach;
-    endif;
-    ?>
-
-    <?php
+            endforeach;
+        endif;
     endforeach;
     ?>
 
@@ -81,13 +78,38 @@ function getBigs() {
         $("#selbig").html(bigs)
     })
 }
+
+function editType(id, dom) {
+    let typeName = $(dom).parent().prev().text();
+    let name = prompt("請輸入你要修改的分類名稱", typeName)
+
+    $.post("./api/save_types.php", {
+        id,
+        name
+    }, function(res) {
+        //  console.log(res);
+        //location.reload();
+        $(dom).parent().prev().text(name);
+    })
+}
+
+function del(table, id) {
+    if (confirm('確定要刪除嗎？')) {
+        $.post("./api/del.php", {
+            table,
+            id
+        }, function() {
+            location.reload();
+        })
+    }
+}
 </script>
 
 
 
 <h2 class="ct">商品管理</h2>
 <div class="ct">
-    <button>新增商品</button>
+    <button onclick="location.href='?do=add_item'">新增商品</button>
 </div>
 
 <table class="all">

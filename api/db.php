@@ -61,17 +61,17 @@ class DB
 
         return $this->pdo->exec($sql);
     }
-    function del($array)
+    function del($id)
     {
-        $sql = "delete  from $this->table ";
-        if (is_array($array)) {
-            $tmp = $this->arrayToSQL($array);
+        $sql = "delete from $this->table ";
+        if (is_array($id)) {
+            $tmp = $this->arrayToSQL($id);
             $sql .= " where " . join(" && ", $tmp);
         } else {
-            $sql .= " where `id`='$array'";
+            $sql .= " where `id`='$id'";
         }
 
-        return $this->exec($sql);
+        return $this->pdo->exec($sql);
     }
     function count(...$arg)
     {
@@ -106,7 +106,12 @@ class DB
     }
     function fetch_all($sql)
     {
-        return $this->pdo->query($sql)->fetchALL(PDO::FETCH_ASSOC);
+        return $this->pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    function exec($sql)
+    {
+        return $this->pdo->exec($sql);
     }
 }
 
@@ -133,3 +138,4 @@ $Mem = new DB("members");
 $Admin = new DB("admins");
 $Bot = new DB('bottom');
 $Type = new DB("types");
+$Item = new DB("item");
