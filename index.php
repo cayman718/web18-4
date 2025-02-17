@@ -28,22 +28,22 @@
                 <?php
                 if (empty($_SESSION['Mem'])) {
                 ?>
-                <a href="?do=login">會員登入</a> |
+                    <a href="?do=login">會員登入</a> |
                 <?php
                 } else {
                 ?>
-                <a href="./api/logout.php?table=Mem">登出</a> |
+                    <a href="./api/logout.php?table=Mem">登出</a> |
                 <?php
                 }
                 ?>
                 <?php
                 if (empty($_SESSION['Admin'])) {
                 ?>
-                <a href="?do=admin">管理登入</a> |
+                    <a href="?do=admin">管理登入</a> |
                 <?php
                 } else {
                 ?>
-                <a href="back.php">返回管理</a> |
+                    <a href="back.php">返回管理</a> |
                 <?php
                 }
                 ?>
@@ -55,6 +55,31 @@
 
         <div id="left" class="ct">
             <div style="min-height:400px;">
+                <a href="?type=0">全部商品</a>
+
+                <?php
+                $bigs = $Type->all(['big_id' => 0]);
+                foreach ($bigs as $big) {
+                    echo "<div class='ww'>";
+                    echo    "<a href='?type={$big['id']}'>";
+                    echo    $big['name'];
+                    echo    "</a>";
+
+                    if ($Type->count(['big_id' => $big['id']]) > 0) {
+                        $mid = $Type->all(['big_id' => $big['id']]);
+                        echo "<div class='s'>";
+                        foreach ($mid as $mids) {
+                            echo "<a href='?type={$mids['id']}' style='background-color:#7ee185;'>";
+                            echo $mids['name'];
+                            echo "</a>";
+                        }
+                        echo "</div>";
+                    }
+                    echo "</div>";
+                }
+
+
+                ?>
 
 
             </div>
@@ -68,13 +93,17 @@
             <?php
             $do = $_GET['do'] ?? 'main';
             $file = "front/" . $do . ".php";
-            include (file_exists($file)) ? $file : "./front/main.php";
+            if (file_exists($file)) {
+                include $file;
+            } else {
+                include "front/main.php";
+            }
 
 
             ?>
         </div>
         <div id="bottom" style="line-height:70px;background:url(icon/bot.png); color:#FFF;" class="ct">
-            <?=$bottom->find(1)['bottom'];?> </div>
+            <?= $bottom->find(1)['bottom']; ?> </div>
     </div>
 
 </body>

@@ -37,52 +37,50 @@
 </div>
 
 <script>
-function chkAcc() {
-    let acc = $("#acc").val();
-    if (acc == 'admin') {
-        alert("不可使用admin做為帳號");
-    } else {
-        $.get("api/chk_acc.php", {
-            acc
-        }, function(res) {
-            console.log(res);
-            if (parseInt(res) >= 1) {
-                alert("帳號已被使用");
-            } else {
-                alert("帳號可以使用");
+    function chkAcc() {
+        let acc = $("#acc").val();
+        if (acc == 'admin') {
+            alert("不可使用admin做為帳號");
+        } else {
+            $.get("api/chk_acc.php", {
+                acc
+            }, function(res) {
+                console.log(res);
+                if (parseInt(res) >= 1) {
+                    alert("帳號已被使用");
+                } else {
+                    alert("帳號可以使用");
 
-            }
-        })
-    }
-}
-
-function reg() {
-    let data = {
-        name: $("#name").val(),
-        acc: $("#acc").val(),
-        pw: $("#pw").val(),
-        tel: $("#tel").val(),
-        addr: $("#addr").val(),
-        email: $("#email").val()
+                }
+            })
+        }
     }
 
-    if (data.acc == 'admin') {
-        alert("不可使用admin做為帳號");
-    } else {
-        $.get("api/chk_acc.php", {
-            acc: data.acc
-        }, function(res) {
-            if (parseInt(res) >= 1) {
-                alert("帳號已被使用");
-            } else {
-                $.post("api/reg.php", data, function(res) {
-                    /* console.log(res);  */
-                    alert("註冊完成，歡迎加入");
-                })
+    function reg() {
+        let data = {
+            name: $("#name").val(),
+            acc: $("#acc").val(),
+            pw: $("#pw").val(),
+            tel: $("#tel").val(),
+            addr: $("#addr").val(),
+            email: $("#email").val()
+        }
 
-            }
-        })
+        if (data.acc == 'admin') {
+            alert("不可使用admin做為帳號");
+        } else {
+            $.get("api/chk_acc.php", {
+                acc: data.acc
+            }, function(res) {
+                if (parseInt(res) >= 1) {
+                    alert("帳號已被使用");
+                } else {
+                    $.post("api/reg.php", data, function(res) {
+                        alert("註冊完成，歡迎加入");
+                        location.href = 'index.php?do=login';
+                    })
+                }
+            })
+        }
     }
-
-}
 </script>

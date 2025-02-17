@@ -1,6 +1,6 @@
 <?php include_once "db.php";
 
-$table = $_GET['table'];
+$table=$_GET['table'];
 
 unset($_SESSION[$table]);
 
