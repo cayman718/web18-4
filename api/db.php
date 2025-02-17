@@ -28,7 +28,6 @@ class DB
         if (!empty($arg[1])) {
             $sql .= $arg[1];
         }
-
         return $this->fetch_all($sql);
     }
 
@@ -61,14 +60,14 @@ class DB
 
         return $this->pdo->exec($sql);
     }
-    function del($id)
+    function del($array)
     {
-        $sql = "delete from $this->table ";
-        if (is_array($id)) {
-            $tmp = $this->arrayToSQL($id);
+        $sql = "delete  from $this->table ";
+        if (is_array($array)) {
+            $tmp = $this->arrayToSQL($array);
             $sql .= " where " . join(" && ", $tmp);
         } else {
-            $sql .= " where `id`='$id'";
+            $sql .= " where `id`='$array'";
         }
 
         return $this->pdo->exec($sql);
@@ -79,14 +78,14 @@ class DB
         if (!empty($arg[0]) && is_array($arg[0])) {
             $tmp = $this->arrayToSQL($arg[0]);
             $sql .= " where " . join(" && ", $tmp);
-        } else if (is_string($arg[0])) {
+        } else if (isset($arg[0]) && is_string($arg[0])) {
             $sql .= $arg[0];
         }
 
         if (!empty($arg[1])) {
             $sql .= $arg[1];
         }
-        // echo $sql;
+        //echo $sql;
         return $this->pdo->query($sql)->fetchColumn();
     }
 
@@ -106,12 +105,7 @@ class DB
     }
     function fetch_all($sql)
     {
-        return $this->pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
-    }
-
-    function exec($sql)
-    {
-        return $this->pdo->exec($sql);
+        return $this->pdo->query($sql)->fetchALL(PDO::FETCH_ASSOC);
     }
 }
 
@@ -136,6 +130,6 @@ function dd($array)
 
 $Mem = new DB("members");
 $Admin = new DB("admins");
-$Bot = new DB('bottom');
+$Bot = new DB("bottom");
 $Type = new DB("types");
-$Item = new DB("item");
+$Item = new DB("items");

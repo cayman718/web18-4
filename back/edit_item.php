@@ -50,38 +50,38 @@ $item = $Item->find($_GET['id']);
         <input type="hidden" name="id" value="<?= $item['id']; ?>">
         <input type="submit" value="修改">
         <input type="reset" value="重置">
-        <input type="button" value="返回">
+        <input type="button" value="返回" onclick="location.href='?do=th'">
     </div>
 </form>
 <script>
-getTypes('big');
+    getTypes('big');
 
-$("#big").on("change", function() {
-    getTypes('mid');
-})
+    $("#big").on("change", function() {
+        getTypes('mid');
+    })
 
-function getTypes(type) {
-    let big_id = 0;
-    if (type == 'mid') {
-        big_id = $("#big").val();
-    }
-
-    $.get("./api/get_types.php", {
-        type,
-        big_id
-    }, function(types) {
-        switch (type) {
-            case 'big':
-                $("#big").html(types)
-                $("#big option[value='<?= $item['big']; ?>']").prop('selected', true)
-                getTypes('mid');
-                break;
-            case 'mid':
-                $("#mid").html(types)
-                $("#mid option[value='<?= $item['mid']; ?>']").prop('selected', true)
-                break;
+    function getTypes(type) {
+        let big_id = 0;
+        if (type == 'mid') {
+            big_id = $("#big").val();
         }
 
-    })
-}
+        $.get("./api/get_types.php", {
+            type,
+            big_id
+        }, function(types) {
+            switch (type) {
+                case 'big':
+                    $("#big").html(types)
+                    $("#big option[value='<?= $item['big']; ?>']").prop('selected', true)
+                    getTypes('mid');
+                    break;
+                case 'mid':
+                    $("#mid").html(types)
+                    $("#mid option[value='<?= $item['mid']; ?>']").prop('selected', true)
+                    break;
+            }
+
+        })
+    }
 </script>
