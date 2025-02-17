@@ -9,7 +9,7 @@
 
     <title>┌精品電子商務網站」</title>
     <link href="./css/css.css" rel="stylesheet" type="text/css">
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="./js/jquery-3.4.1.min.js"></script>
     <script src="./js/js.js"></script>
 </head>
 
@@ -56,7 +56,6 @@
         <div id="left" class="ct">
             <div style="min-height:400px;">
                 <a href="?type=0">全部商品</a>
-
                 <?php
                 $bigs = $Type->all(['big_id' => 0]);
                 foreach ($bigs as $big) {
@@ -64,23 +63,19 @@
                     echo    "<a href='?type={$big['id']}'>";
                     echo    $big['name'];
                     echo    "</a>";
-
                     if ($Type->count(['big_id' => $big['id']]) > 0) {
-                        $mid = $Type->all(['big_id' => $big['id']]);
+                        $mids = $Type->all(['big_id' => $big['id']]);
                         echo "<div class='s'>";
-                        foreach ($mid as $mids) {
-                            echo "<a href='?type={$mids['id']}' style='background-color:#7ee185;'>";
-                            echo $mids['name'];
+                        foreach ($mids as $mid) {
+                            echo "<a href='?type={$mid['id']}' style='background-color: #7ee185;'>";
+                            echo $mid['name'];
                             echo "</a>";
                         }
                         echo "</div>";
                     }
                     echo "</div>";
                 }
-
-
                 ?>
-
 
             </div>
             <span>
@@ -103,7 +98,7 @@
             ?>
         </div>
         <div id="bottom" style="line-height:70px;background:url(icon/bot.png); color:#FFF;" class="ct">
-            <?= $bottom->find(1)['bottom']; ?> </div>
+            <?= $Bot->find(1)['bottom']; ?></div>
     </div>
 
 </body>

@@ -36,21 +36,22 @@ $user = $Mem->find(['acc' => $_SESSION["Mem"]]);
     foreach ($_SESSION['cart'] as $id => $qt):
         $item = $Item->find($id);
     ?>
-        <tr class="pp">
-            <td><?= $item['name']; ?></td>
-            <td class="ct"><?= $item['no']; ?></td>
-            <td class="ct"><?= $qt; ?></td>
-            <td class="ct"><?= $item['price']; ?></td>
-            <td class="ct">
-                <?php
+    <tr class="pp">
+        <td><?= $item['name']; ?></td>
+        <td class="ct"><?= $item['no']; ?></td>
+        <td class="ct"><?= $qt; ?></td>
+        <td class="ct"><?= $item['price']; ?></td>
+        <td class="ct">
+            <?php
                 echo $item['price'] * $qt;
                 ?>
-            </td>
-        </tr>
+        </td>
+    </tr>
     <?php
     endforeach;
     ?>
 </table>
+
 <div class="ct">
     <button>確定送出</button>
     <button onclick="location.href='?do=buycart'">返回修改訂單</button>
