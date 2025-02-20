@@ -60,17 +60,35 @@
                 $bigs = $Type->all(['big_id' => 0]);
                 foreach ($bigs as $big) {
                     echo "<div class='ww'>";
-                    echo    "<a href='?type={$big['id']}'>";
-                    echo    $big['name'];
-                    echo "({$Item->count(['big' =>$big['id'], 'sh' => 1])})";
-                    echo    "</a>";
+                    $count = 0;
+                    switch ($big['id']) {
+                        case 2:  // 流行皮件
+                            $count = $Item->count(['sh' => 1, 'big' => 1]);
+                            break;
+                        case 3:  // 流行鞋區
+                            $count = $Item->count(['sh' => 1, 'big' => 2]);
+                            break;
+                        case 24: // 流行飾品
+                            $count = $Item->count(['sh' => 1, 'big' => 3]);
+                            break;
+                        case 26: // 背包
+                            $count = $Item->count(['sh' => 1, 'big' => 4]);
+                            break;
+                    }
+
+                    echo "<a href='?type={$big['id']}'>";
+                    echo $big['name'];
+                    echo "({$count})";
+                    echo "</a>";
+
                     if ($Type->count(['big_id' => $big['id']]) > 0) {
                         $mids = $Type->all(['big_id' => $big['id']]);
                         echo "<div class='s'>";
                         foreach ($mids as $mid) {
+                            $count = $Item->count(['sh' => 1, 'mid' => $mid['id']]);
                             echo "<a href='?type={$mid['id']}' style='background-color: #7ee185;'>";
                             echo $mid['name'];
-                            echo "({$Item->count(['mid' =>$mid['id'], 'sh' => 1])})";
+                            echo "({$count})";
                             echo "</a>";
                         }
                         echo "</div>";

@@ -33,26 +33,54 @@ $user = $Mem->find(['acc' => $_SESSION["Mem"]]);
         <td>小計</td>
     </tr>
     <?php
+    $sum = 0;
     foreach ($_SESSION['cart'] as $id => $qt):
         $item = $Item->find($id);
     ?>
-    <tr class="pp">
-        <td><?= $item['name']; ?></td>
-        <td class="ct"><?= $item['no']; ?></td>
-        <td class="ct"><?= $qt; ?></td>
-        <td class="ct"><?= $item['price']; ?></td>
-        <td class="ct">
-            <?php
+        <tr class="pp">
+            <td><?= $item['name']; ?></td>
+            <td class="ct"><?= $item['no']; ?></td>
+            <td class="ct"><?= $qt; ?></td>
+            <td class="ct"><?= $item['price']; ?></td>
+            <td class="ct">
+                <?php
                 echo $item['price'] * $qt;
+                $sum = $sum + ($item['price'] * $qt);
                 ?>
-        </td>
-    </tr>
+            </td>
+        </tr>
     <?php
     endforeach;
     ?>
 </table>
-
+<div class="all tt ct" style="padding:5px;margin-top:0">總價:<?= $sum; ?></div>
 <div class="ct">
-    <button>確定送出</button>
+    <button onclick="checkout()">確定送出</button>
     <button onclick="location.href='?do=buycart'">返回修改訂單</button>
 </div>
+<script>
+    function checkout() {
+        if ($("#name").val() == "" || $("#email").val() == "" || $("#addr").val() == "" || $("#tel").val() == "") {
+            alert("請填寫完整訂購資料");
+            return;
+        }
+
+        let data = {
+            name: $("#name").val(),
+            email: $("#email").val(),
+            addr: $("#addr").val(),
+            tel: $("#tel").val(),
+            total: <?= $sum ?>
+        }
+
+        $.post("./api/checkout.php", data, function(response) {
+            if (response == 1) {
+                alert("訂購成功\n感謝你的選購");
+                location.reload();
+                location.href = '?do=main';
+            } else {
+                alert("訂購失敗，請聯繫客服");
+            }
+        })
+    }
+</script>

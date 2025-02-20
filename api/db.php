@@ -96,7 +96,6 @@ class DB
         foreach ($array as $key => $value) {
             $tmp[] = "`$key`='$value'";
         }
-
         return $tmp;
     }
     function fetch_one($sql)
@@ -133,3 +132,4 @@ $Admin = new DB("admins");
 $Bot = new DB("bottom");
 $Type = new DB("types");
 $Item = new DB("items");
+$Order = new DB('orders');
